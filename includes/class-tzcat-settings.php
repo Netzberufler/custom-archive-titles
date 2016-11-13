@@ -83,25 +83,12 @@ class TZCAT_Settings {
 	 */
 	public function default_settings() {
 
-		$default_settings = array();
-
-		foreach ( $this->get_registered_settings() as $key => $option ) :
-
-			if ( 'multicheck' === $option['type'] ) :
-
-				foreach ( $option['options'] as $index => $value ) :
-
-					$default_settings[ $key ][ $index ] = isset( $option['default'] ) ? $option['default'] : false;
-
-				endforeach;
-
-			else :
-
-				$default_settings[ $key ] = isset( $option['default'] ) ? $option['default'] : false;
-
-			endif;
-
-		endforeach;
+		$default_settings = array(
+			'category_title' => __( 'Category: %s' ),
+			'tag_title'      => __( 'Tag: %s' ),
+			'author_title'   => __( 'Author: %s' ),
+			'month_title'    => __( 'Month: %s' ),
+		);
 
 		return $default_settings;
 	}
@@ -196,15 +183,7 @@ class TZCAT_Settings {
 
 				$input[ $key ] = esc_html( $value );
 
-			elseif ( 'textarea_html' === $type ) :
-
-				if ( current_user_can( 'unfiltered_html' ) ) :
-					$input[ $key ] = $value;
-				else :
-					$input[ $key ] = wp_kses_post( $value );
-				endif;
-
-			elseif ( 'checkbox' === $type or 'multicheck' === $type ) :
+			elseif ( 'checkbox' === $type ) :
 
 				$input[ $key ] = $value; // Validate Checkboxes later.
 
@@ -226,15 +205,13 @@ class TZCAT_Settings {
 					$input[ $key ] = ! empty( $input[ $key ] );
 				endif;
 
-				// Multicheck list.
-				if ( isset( $settings[ $key ]['type'] ) && 'multicheck' == $settings[ $key ]['type'] ) :
-					foreach ( $settings[ $key ]['options'] as $index => $value ) :
-						$input[ $key ][ $index ] = ! empty( $input[ $key ][ $index ] );
-					endforeach;
-				endif;
-
 			endforeach;
 		endif;
+
+		// Reset to default settings.
+		if ( isset( $_POST['tzcat_reset_defaults'] ) ) {
+			$input = $this->default_settings();
+		}
 
 		return array_merge( $saved, $input );
 	}
@@ -246,22 +223,48 @@ class TZCAT_Settings {
 	 */
 	function get_registered_settings() {
 
+		// Get default settings.
+		$default_settings = $this->default_settings();
+
+		// Create Settings array.
 		$settings = array(
 			'category_title' => array(
-				'name' => esc_html__( 'Category Title', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Category Archives', 'themezee-custom-archive-titles' ),
 				'desc' => esc_html__( 'Enter the title which is displayed on category archives. %s will be replaced with the category name.', 'themezee-custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'text',
 				'size' => 'regular',
-				'default' => __( 'Category: %s' ),
+				'default' => $default_settings['category_title'],
+			),
+			'tag_title' => array(
+				'name' => esc_html__( 'Tag Archives', 'themezee-custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on tag archives. %s will be replaced with the tag name.', 'themezee-custom-archive-titles' ),
+				'section' => 'general',
+				'type' => 'text',
+				'size' => 'regular',
+				'default' => $default_settings['tag_title'],
 			),
 			'author_title' => array(
-				'name' => esc_html__( 'Author Title', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Author Archives', 'themezee-custom-archive-titles' ),
 				'desc' => esc_html__( 'Enter the title which is displayed on author archives. %s will be replaced with the author name.', 'themezee-custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'text',
 				'size' => 'regular',
-				'default' => esc_html__( 'Author: %s', 'themezee-custom-archive-titles' ),
+				'default' => $default_settings['author_title'],
+			),
+			'month_title' => array(
+				'name' => esc_html__( 'Monthly Archives', 'themezee-custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on monthly archives. %s will be replaced with the name of the month.', 'themezee-custom-archive-titles' ),
+				'section' => 'general',
+				'type' => 'text',
+				'size' => 'regular',
+				'default' => $default_settings['month_title'],
+			),
+			'reset' => array(
+				'name' => esc_html__( 'Reset to default values', 'themezee-custom-archive-titles' ),
+				'section' => 'general',
+				'type' => 'reset',
+				'default' => '',
 			),
 		);
 
@@ -281,30 +284,9 @@ class TZCAT_Settings {
 
 		$checked = isset( $this->options[ $args['id'] ] ) ? checked( 1, $this->options[ $args['id'] ], false ) : '';
 		$html = '<input type="checkbox" id="tzcat_settings[' . $args['id'] . ']" name="tzcat_settings[' . $args['id'] . ']" value="1" ' . $checked . '/>';
-		$html .= '<label for="tzcat_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
+		$html .= '<label for="tzcat_settings[' . $args['id'] . ']"> ' . $args['desc'] . '</label>';
 
 		echo $html;
-	}
-
-	/**
-	 * Multicheck Callback
-	 *
-	 * Renders multiple checkboxes.
-	 *
-	 * @param array $args Arguments passed by the setting.
-	 * @global $this->options Array of all the ThemeZee Custom Archive Titles Options
-	 * @return void
-	 */
-	function multicheck_callback( $args ) {
-
-		if ( ! empty( $args['options'] ) ) :
-			foreach ( $args['options'] as $key => $option ) {
-				$checked = isset( $this->options[ $args['id'] ][ $key ] ) ? checked( 1, $this->options[ $args['id'] ][ $key ], false ) : '';
-				echo '<input name="tzcat_settings[' . $args['id'] . '][' . $key . ']" id="tzcat_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="1" ' . $checked . '/>&nbsp;';
-				echo '<label for="tzcat_settings[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
-			}
-		endif;
-		echo '<p class="description">' . $args['desc'] . '</p>';
 	}
 
 	/**
@@ -326,7 +308,7 @@ class TZCAT_Settings {
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 		$html = '<input type="text" class="' . $size . '-text" id="tzcat_settings[' . $args['id'] . ']" name="tzcat_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
+		$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 		echo $html;
 	}
@@ -383,7 +365,7 @@ class TZCAT_Settings {
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 		$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzcat_settings[' . $args['id'] . ']" name="tzcat_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
+		$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 		echo $html;
 	}
@@ -407,45 +389,9 @@ class TZCAT_Settings {
 
 		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzcat_settings_' . $args['id'] . '" name="tzcat_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
+		$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 		echo $html;
-	}
-
-	/**
-	 * Textarea HTML Callback
-	 *
-	 * Renders textarea fields which allow HTML code.
-	 *
-	 * @param array $args Arguments passed by the setting.
-	 * @global $this->options Array of all the ThemeZee Custom Archive Titles Options
-	 * @return void
-	 */
-	function textarea_html_callback( $args ) {
-
-		if ( isset( $this->options[ $args['id'] ] ) ) {
-			$value = $this->options[ $args['id'] ];
-		} else {
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-		}
-
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzcat_settings_' . $args['id'] . '" name="tzcat_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
-
-		echo $html;
-	}
-
-	/**
-	 * Missing Callback
-	 *
-	 * If a function is missing for settings callbacks alert the user.
-	 *
-	 * @param array $args Arguments passed by the setting.
-	 * @return void
-	 */
-	function missing_callback( $args ) {
-		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-custom-archive-titles' ), $args['id'] );
 	}
 
 	/**
@@ -473,9 +419,38 @@ class TZCAT_Settings {
 		endforeach;
 
 		$html .= '</select>';
-		$html .= '<p class="description">'  . $args['desc'] . '</p>';
+		$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 		echo $html;
+	}
+
+	/**
+	 * Reset Callback
+	 *
+	 * Renders reset to defaults callback.
+	 *
+	 * @param array $args Arguments passed by the setting.
+	 * @global $this->options Array of all the ThemeZee Breadcrumbs Options
+	 * @return void
+	 */
+	function reset_callback( $args ) {
+
+		$html = '<input type="submit" class="button" name="tzcat_reset_defaults" value="' . esc_attr__( 'Reset', 'themezee-custom-archive-titles' ) . '"/>';
+		$html .= '<p class="description">' . $args['desc'] . '</p>';
+
+		echo $html;
+	}
+
+	/**
+	 * Missing Callback
+	 *
+	 * If a function is missing for settings callbacks alert the user.
+	 *
+	 * @param array $args Arguments passed by the setting.
+	 * @return void
+	 */
+	function missing_callback( $args ) {
+		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-custom-archive-titles' ), $args['id'] );
 	}
 }
 

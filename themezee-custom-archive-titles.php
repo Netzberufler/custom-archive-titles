@@ -127,26 +127,29 @@ class ThemeZee_Custom_Archive_Titles {
 		$instance = TZCAT_Settings::instance();
 		$options = $instance->get_all();
 
-		// Change Archive Titles.
-		if ( is_category() && __( 'Category: %s' ) !== $options['category_title'] ) {
+		// Get default settings.
+		$default_settings = $instance->default_settings();
 
+		// Change Archive Titles.
+		if ( is_category() && $default_settings['category_title'] !== $options['category_title'] ) {
+
+			// Change Category Archive Title.
 			$title = sprintf( esc_html( $options['category_title'] ), single_cat_title( '', false ) );
 
-		} elseif ( is_tag() ) {
+		} elseif ( is_tag() && $default_settings['tag_title'] !== $options['tag_title'] ) {
 
-			$title = single_tag_title( '', false );
+			// Change Tag Archive Title.
+			$title = sprintf( esc_html( $options['tag_title'] ), single_tag_title( '', false ) );
 
-		} elseif ( is_author() && 'Author: %s' !== $options['author_title'] ) {
+		} elseif ( is_author() && $default_settings['author_title'] !== $options['author_title'] ) {
 
-			$title = '<span class="vcard">' . get_the_author() . '</span>';
+			// Change Author Archive Title.
+			$title = sprintf( esc_html( $options['author_title'] ), '<span class="vcard">' . get_the_author() . '</span>' );
 
-		} elseif ( is_post_type_archive() ) {
+		} elseif ( is_month() && $default_settings['month_title'] !== $options['month_title'] ) {
 
-			$title = post_type_archive_title( '', false );
-
-		} elseif ( is_tax() ) {
-
-			$title = single_term_title( '', false );
+			// Change Monthly Archive Title.
+			$title = sprintf( esc_html( $options['month_title'] ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
 
 		}
 
