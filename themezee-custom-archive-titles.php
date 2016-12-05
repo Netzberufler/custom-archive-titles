@@ -2,7 +2,7 @@
 /*
 Plugin Name: Custom Archive Titles
 Plugin URI: https://themezee.com/plugins/custom-archive-titles/
-Description: This plugin allows you to add a nice and elegant breadcrumb navigation. Breadcrumbs make it easy for the user to navigate up and down the hierarchy of your website and are good for SEO.
+Description: A small and simple plugin to adjust the default texts of archive titles in WordPress
 Author: ThemeZee
 Author URI: https://themezee.com/
 Version: 1.0
@@ -17,7 +17,9 @@ Copyright(C) 2016, ThemeZee.com - support@themezee.com
 */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 
 /**

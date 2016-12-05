@@ -175,14 +175,6 @@ class TZCAT_Settings {
 				$available_options = array_keys( $settings[ $key ]['options'] );
 				$input[ $key ] = in_array( $value, $available_options, true ) ? $value : $settings[ $key ]['default'];
 
-			elseif ( 'number' === $type ) :
-
-				$input[ $key ] = floatval( $value );
-
-			elseif ( 'textarea' === $type ) :
-
-				$input[ $key ] = esc_html( $value );
-
 			elseif ( 'checkbox' === $type ) :
 
 				$input[ $key ] = $value; // Validate Checkboxes later.
@@ -340,58 +332,6 @@ class TZCAT_Settings {
 			endforeach;
 		endif;
 		echo '<p class="description">' . $args['desc'] . '</p>';
-	}
-
-	/**
-	 * Number Callback
-	 *
-	 * Renders number fields.
-	 *
-	 * @param array $args Arguments passed by the setting.
-	 * @global $this->options Array of all the ThemeZee Custom Archive Titles Options
-	 * @return void
-	 */
-	function number_callback( $args ) {
-
-		if ( isset( $this->options[ $args['id'] ] ) ) {
-			$value = $this->options[ $args['id'] ];
-		} else {
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-		}
-
-		$max  = isset( $args['max'] ) ? $args['max'] : 999999;
-		$min  = isset( $args['min'] ) ? $args['min'] : 0;
-		$step = isset( $args['step'] ) ? $args['step'] : 1;
-
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $size . '-text" id="tzcat_settings[' . $args['id'] . ']" name="tzcat_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
-		$html .= '<p class="description">' . $args['desc'] . '</p>';
-
-		echo $html;
-	}
-
-	/**
-	 * Textarea Callback
-	 *
-	 * Renders textarea fields.
-	 *
-	 * @param array $args Arguments passed by the setting.
-	 * @global $this->options Array of all the ThemeZee Custom Archive Titles Options
-	 * @return void
-	 */
-	function textarea_callback( $args ) {
-
-		if ( isset( $this->options[ $args['id'] ] ) ) {
-			$value = $this->options[ $args['id'] ];
-		} else {
-			$value = isset( $args['default'] ) ? $args['default'] : '';
-		}
-
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = '<textarea class="' . $size . '-text" cols="20" rows="5" id="tzcat_settings_' . $args['id'] . '" name="tzcat_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
-		$html .= '<p class="description">' . $args['desc'] . '</p>';
-
-		echo $html;
 	}
 
 	/**

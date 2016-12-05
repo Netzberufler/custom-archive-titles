@@ -1,43 +1,42 @@
-=== ThemeZee Custom Archive Titles ===
+=== Custom Archive Titles ===
 Author URI: https://themezee.com
 Plugin URI: https://themezee.com/plugins/custom-archive-titles/
 Contributors: themezee
-Requires at least: 4.1
-Tested up to: 4.4
-Stable tag: 1.0.3
+Tags: archive, title, heading, custom, category, tag, author
+Requires at least: 4.4
+Tested up to: 4.7
+Stable tag: 1.0
 License: GPLv2 or later
 
-The *ThemeZee Custom Archive Titles* plugin allows you to add a nice and elegant breadcrumb navigation
+A small and simple plugin to adjust the default texts of archive titles in WordPress
 
 == Description ==
 
-The *ThemeZee Custom Archive Titles* plugin allows you to add a nice and elegant breadcrumb navigation. 
-Breadcrumbs make it easy for the user to navigate up and down the hierarchy of your website and also allow search engines to better understand the structure of your site.
+The *Custom Archive Titles* plugin allows you to change the default texts of archive titles in WordPress.
 
-= Documentation =
+= Set custom titles on =
 
-For detailed setup instructions, visit the official [Documentation](https://themezee.com/docs/custom-archive-titles-documentation/) page
+* Category Archives (Category: %s)
+* Tag Archives (Tag: %s)
+* Author Archives (Author: %s)
+* Monthly Archives (Month: %s)
+
+= Examples =
+* Published in News
+* Tagged with Books
+* Posts written by Jane Doe
+
+= Requirements =
+
+Your theme has to use [the_archive_title()](https://developer.wordpress.org/reference/functions/the_archive_title/) for showing archive titles.
 
 == Installation ==
 
 1. Activate the plugin
-2. Go to Settings > ThemeZee Plugins > Breadcrumbs and configure the plugin
-3. For detailed setup instructions, visit the official [Documentation](https://themezee.com/docs/custom-archive-titles-documentation/) page
+2. Go to Settings > Custom Archive Titles
+3. Adjust the default titles. %s will be replaced with category, tag, author or month of the archive.
 
 == Changelog ==
-
-= 1.0.3 =
-
-* fixed wrong order of breadcrumb items with multiple child categories
-
-= 1.0.2 =
-
-* fixed missing styling on plugin overview page
-* improved license key setting
-
-= 1.0.1 =
-
-* moved plugin settings to Settings > ThemeZee Plugins panel
 
 = 1.0 =
 
