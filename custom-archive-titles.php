@@ -5,8 +5,8 @@ Plugin URI: https://themezee.com/plugins/custom-archive-titles/
 Description: A small and simple plugin to adjust the default texts of archive titles in WordPress
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.0
-Text Domain: themezee-custom-archive-titles
+Version: 1.0.1
+Text Domain: custom-archive-titles
 Domain Path: /languages/
 License: GPL v3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -61,10 +61,10 @@ class ThemeZee_Custom_Archive_Titles {
 	static function constants() {
 
 		// Define Plugin Name.
-		define( 'TZCAT_NAME', 'ThemeZee Custom Archive Titles' );
+		define( 'TZCAT_NAME', 'Custom Archive Titles' );
 
 		// Define Version Number.
-		define( 'TZCAT_VERSION', '1.0' );
+		define( 'TZCAT_VERSION', '1.0.1' );
 
 		// Plugin Folder Path.
 		define( 'TZCAT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -84,7 +84,7 @@ class ThemeZee_Custom_Archive_Titles {
 	 */
 	static function translation() {
 
-		load_plugin_textdomain( 'themezee-custom-archive-titles', false, dirname( plugin_basename( TZCAT_PLUGIN_FILE ) ) . '/languages/' );
+		load_plugin_textdomain( 'custom-archive-titles', false, dirname( plugin_basename( TZCAT_PLUGIN_FILE ) ) . '/languages/' );
 
 	}
 
@@ -165,7 +165,7 @@ class ThemeZee_Custom_Archive_Titles {
 	 */
 	static function plugin_action_links( $actions ) {
 
-		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=themezee-custom-archive-titles' ), __( 'Settings', 'themezee-custom-archive-titles' ) ) );
+		$settings_link = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=themezee-custom-archive-titles' ), __( 'Settings', 'custom-archive-titles' ) ) );
 
 		return array_merge( $settings_link, $actions );
 	}

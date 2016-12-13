@@ -106,7 +106,7 @@ class TZCAT_Settings {
 		}
 
 		// Add Sections.
-		add_settings_section( 'tzcat_settings_general', esc_html__( 'Archive Titles', 'themezee-custom-archive-titles' ), '__return_false', 'tzcat_settings' );
+		add_settings_section( 'tzcat_settings_general', esc_html__( 'Archive Titles', 'custom-archive-titles' ), '__return_false', 'tzcat_settings' );
 
 		// Add Settings.
 		foreach ( $this->get_registered_settings() as $key => $option ) :
@@ -221,39 +221,39 @@ class TZCAT_Settings {
 		// Create Settings array.
 		$settings = array(
 			'category_title' => array(
-				'name' => esc_html__( 'Category Archives', 'themezee-custom-archive-titles' ),
-				'desc' => esc_html__( 'Enter the title which is displayed on category archives. %s will be replaced with the category name.', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Category Archives', 'custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on category archives. %s will be replaced with the category name.', 'custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'text',
 				'size' => 'regular',
 				'default' => $default_settings['category_title'],
 			),
 			'tag_title' => array(
-				'name' => esc_html__( 'Tag Archives', 'themezee-custom-archive-titles' ),
-				'desc' => esc_html__( 'Enter the title which is displayed on tag archives. %s will be replaced with the tag name.', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Tag Archives', 'custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on tag archives. %s will be replaced with the tag name.', 'custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'text',
 				'size' => 'regular',
 				'default' => $default_settings['tag_title'],
 			),
 			'author_title' => array(
-				'name' => esc_html__( 'Author Archives', 'themezee-custom-archive-titles' ),
-				'desc' => esc_html__( 'Enter the title which is displayed on author archives. %s will be replaced with the author name.', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Author Archives', 'custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on author archives. %s will be replaced with the author name.', 'custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'text',
 				'size' => 'regular',
 				'default' => $default_settings['author_title'],
 			),
 			'month_title' => array(
-				'name' => esc_html__( 'Monthly Archives', 'themezee-custom-archive-titles' ),
-				'desc' => esc_html__( 'Enter the title which is displayed on monthly archives. %s will be replaced with the name of the month.', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Monthly Archives', 'custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on monthly archives. %s will be replaced with the name of the month.', 'custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'text',
 				'size' => 'regular',
 				'default' => $default_settings['month_title'],
 			),
 			'reset' => array(
-				'name' => esc_html__( 'Reset to default values', 'themezee-custom-archive-titles' ),
+				'name' => esc_html__( 'Reset to default values', 'custom-archive-titles' ),
 				'section' => 'general',
 				'type' => 'reset',
 				'default' => '',
@@ -375,7 +375,7 @@ class TZCAT_Settings {
 	 */
 	function reset_callback( $args ) {
 
-		$html = '<input type="submit" class="button" name="tzcat_reset_defaults" value="' . esc_attr__( 'Reset', 'themezee-custom-archive-titles' ) . '"/>';
+		$html = '<input type="submit" class="button" name="tzcat_reset_defaults" value="' . esc_attr__( 'Reset', 'custom-archive-titles' ) . '"/>';
 		$html .= '<p class="description">' . $args['desc'] . '</p>';
 
 		echo $html;
@@ -390,7 +390,7 @@ class TZCAT_Settings {
 	 * @return void
 	 */
 	function missing_callback( $args ) {
-		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'themezee-custom-archive-titles' ), $args['id'] );
+		printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'custom-archive-titles' ), $args['id'] );
 	}
 }
 

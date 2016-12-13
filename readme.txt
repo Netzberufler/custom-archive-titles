@@ -5,7 +5,7 @@ Contributors: themezee
 Tags: archive, title, heading, custom, category, tag, author
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 A small and simple plugin to adjust the default texts of archive titles in WordPress
@@ -36,7 +36,15 @@ Your theme has to use [the_archive_title()](https://developer.wordpress.org/refe
 2. Go to Settings > Custom Archive Titles
 3. Adjust the default titles. %s will be replaced with category, tag, author or month of the archive.
 
+== Screenshots ==
+
+1. Plugin Settings
+
 == Changelog ==
+
+= 1.0.1 =
+
+* Fixed wrong text domain
 
 = 1.0 =
 

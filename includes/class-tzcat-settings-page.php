@@ -35,8 +35,8 @@ class TZCAT_Settings_Page {
 	static function add_settings_page() {
 
 		add_options_page(
-			esc_html__( 'Custom Archive Titles', 'themezee-custom-archive-titles' ),
-			esc_html__( 'Custom Archive Titles', 'themezee-custom-archive-titles' ),
+			esc_html__( 'Custom Archive Titles', 'custom-archive-titles' ),
+			esc_html__( 'Custom Archive Titles', 'custom-archive-titles' ),
 			'manage_options',
 			'themezee-custom-archive-titles',
 			array( __CLASS__, 'display_settings_page' )
@@ -56,7 +56,7 @@ class TZCAT_Settings_Page {
 
 		<div id="tzcat-settings" class="tzcat-settings-wrap wrap">
 
-			<h1><?php esc_html_e( 'Custom Archive Titles', 'themezee-custom-archive-titles' ); ?></h1>
+			<h1><?php esc_html_e( 'Custom Archive Titles', 'custom-archive-titles' ); ?></h1>
 
 			<form class="tzcat-settings-form" method="post" action="options.php">
 				<?php
