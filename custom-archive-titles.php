@@ -5,14 +5,14 @@ Plugin URI: https://themezee.com/plugins/custom-archive-titles/
 Description: A small and simple plugin to adjust the default texts of archive titles in WordPress
 Author: ThemeZee
 Author URI: https://themezee.com/
-Version: 1.0.1
+Version: 1.1
 Text Domain: custom-archive-titles
 Domain Path: /languages/
 License: GPL v3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 ThemeZee Custom Archive Titles
-Copyright(C) 2016, ThemeZee.com - support@themezee.com
+Copyright(C) 2017, ThemeZee.com - support@themezee.com
 
 */
 
@@ -64,7 +64,7 @@ class ThemeZee_Custom_Archive_Titles {
 		define( 'TZCAT_NAME', 'Custom Archive Titles' );
 
 		// Define Version Number.
-		define( 'TZCAT_VERSION', '1.0.1' );
+		define( 'TZCAT_VERSION', '1.1' );
 
 		// Plugin Folder Path.
 		define( 'TZCAT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -148,10 +148,20 @@ class ThemeZee_Custom_Archive_Titles {
 			// Change Author Archive Title.
 			$title = sprintf( esc_html( $options['author_title'] ), '<span class="vcard">' . get_the_author() . '</span>' );
 
+		} elseif ( is_year() && $default_settings['year_title'] !== $options['year_title'] ) {
+
+			// Change Yearly Archive Title.
+			$title = sprintf( esc_html( $options['year_title'] ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
+
 		} elseif ( is_month() && $default_settings['month_title'] !== $options['month_title'] ) {
 
 			// Change Monthly Archive Title.
 			$title = sprintf( esc_html( $options['month_title'] ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
+
+		} elseif ( is_day() && $default_settings['day_title'] !== $options['day_title'] ) {
+
+			// Change Daily Archive Title.
+			$title = sprintf( esc_html( $options['day_title'] ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
 
 		}
 

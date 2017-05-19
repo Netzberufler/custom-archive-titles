@@ -87,7 +87,9 @@ class TZCAT_Settings {
 			'category_title' => __( 'Category: %s' ),
 			'tag_title'      => __( 'Tag: %s' ),
 			'author_title'   => __( 'Author: %s' ),
+			'year_title'     => __( 'Year: %s' ),
 			'month_title'    => __( 'Month: %s' ),
+			'day_title'      => __( 'Day: %s' ),
 		);
 
 		return $default_settings;
@@ -244,6 +246,14 @@ class TZCAT_Settings {
 				'size' => 'regular',
 				'default' => $default_settings['author_title'],
 			),
+			'year_title' => array(
+				'name' => esc_html__( 'Yearly Archives', 'custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on yearly archives. %s will be replaced with the year.', 'custom-archive-titles' ),
+				'section' => 'general',
+				'type' => 'text',
+				'size' => 'regular',
+				'default' => $default_settings['year_title'],
+			),
 			'month_title' => array(
 				'name' => esc_html__( 'Monthly Archives', 'custom-archive-titles' ),
 				'desc' => esc_html__( 'Enter the title which is displayed on monthly archives. %s will be replaced with the name of the month.', 'custom-archive-titles' ),
@@ -251,6 +261,14 @@ class TZCAT_Settings {
 				'type' => 'text',
 				'size' => 'regular',
 				'default' => $default_settings['month_title'],
+			),
+			'day_title' => array(
+				'name' => esc_html__( 'Daily Archives', 'custom-archive-titles' ),
+				'desc' => esc_html__( 'Enter the title which is displayed on daily archives. %s will be replaced with the date.', 'custom-archive-titles' ),
+				'section' => 'general',
+				'type' => 'text',
+				'size' => 'regular',
+				'default' => $default_settings['day_title'],
 			),
 			'reset' => array(
 				'name' => esc_html__( 'Reset to default values', 'custom-archive-titles' ),

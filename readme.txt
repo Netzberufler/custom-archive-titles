@@ -4,8 +4,8 @@ Plugin URI: https://themezee.com/plugins/custom-archive-titles/
 Contributors: themezee
 Tags: archive, title, heading, custom, category, tag, author
 Requires at least: 4.4
-Tested up to: 4.7
-Stable tag: 1.0.1
+Tested up to: 4.8
+Stable tag: 1.1
 License: GPLv2 or later
 
 A small and simple plugin to adjust the default texts of archive titles in WordPress
@@ -19,7 +19,9 @@ The *Custom Archive Titles* plugin allows you to change the default texts of arc
 * Category Archives (Category: %s)
 * Tag Archives (Tag: %s)
 * Author Archives (Author: %s)
+* Yearly Archives (Year: %s)
 * Monthly Archives (Month: %s)
+* Daily Archives (Day: %s)
 
 = Examples =
 * Published in News
@@ -41,6 +43,10 @@ Your theme has to use [the_archive_title()](https://developer.wordpress.org/refe
 1. Plugin Settings
 
 == Changelog ==
+
+= 1.1 =
+
+* Added settings to change titles of yearly and daily archives
 
 = 1.0.1 =
 
