@@ -4,7 +4,7 @@ Plugin URI: https://themezee.com/plugins/custom-archive-titles/
 Contributors: themezee
 Tags: archive, title, heading, custom, category, tag, author
 Requires at least: 4.4
-Tested up to: 4.8
+Tested up to: 5.4
 Stable tag: 1.1
 License: GPLv2 or later
 
